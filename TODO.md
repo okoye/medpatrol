@@ -15,6 +15,9 @@ The following are *extras* if time permits
 * Simple spam detection and anti-cheat (Integrity service)
 
 ## Mathew
+* ~~Name~~
 * ~~Setup Twitter Account~~
+* Basic Logo (Twitter and Website)
 * Website
-* Define Rules for submission
+* Define Rules for Twitter
+* Testing (replys and questios)
