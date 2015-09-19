@@ -1,3 +1,4 @@
+## Chuka
 * ~~System architecture~~
 * ~~Design review~~
 * Project files structure
@@ -8,9 +9,12 @@
 * Horn service implementation
 * Decider service implementation
 
-
 The following are *extras* if time permits
 
 * More sophisticated NLP based rules for parsing messages
 * Simple spam detection and anti-cheat (Integrity service)
 
+## Mathew
+* ~~Setup Twitter Account~~
+* Website
+* Define Rules for submission
