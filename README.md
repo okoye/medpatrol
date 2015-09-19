@@ -15,7 +15,7 @@ Just because. It is a hackathon afterall.
 
 
 # Running
-* Setup and configure virtualenv
+* Setup and configure virtualenv see excellent virtualenvwrapper
 * Install dependencies (see setup.py)
 * Run tests (if you care to)
 * Install medpatrol libraries by executing setup.py install
