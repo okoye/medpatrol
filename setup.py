@@ -28,5 +28,5 @@ def main():
         import distutils.core
         distutils.core.setup(**METADATA)
 
-if __name__ == '__main__'
+if __name__ == '__main__':
     main()
