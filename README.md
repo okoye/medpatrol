@@ -14,4 +14,11 @@ To address the endemic issue of fake drugs in developing nations
 Just because. It is a hackathon afterall.
 
 
-
+# Running
+* Setup and configure virtualenv
+* Install dependencies (see setup.py)
+* Run tests (if you care to)
+* Install medpatrol libraries by executing setup.py install
+* Install necessary system dependencies like ZMQ (see preconditions.md)
+* Run sanity check script
+* Finally run supervisord process
