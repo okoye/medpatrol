@@ -1,5 +1,5 @@
-* System architecture
-* Design review
+* ~~System architecture~~
+* ~~Design review~~
 * Project files structure
 * Project setup files
 * Database setup files
