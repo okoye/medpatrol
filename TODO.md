@@ -25,4 +25,4 @@ The following are *extras* if time permits
 * Define Rules for Twitter
 * Testing (replys and questions)
 * Presentation Outline
-* Presentation Slides
+* ~~Presentation Slides~~
