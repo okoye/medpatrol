@@ -3,11 +3,14 @@
 * ~~Design review~~
 * ~~Project files structure~~
 * ~~Project setup files~~
-* Database setup files
-* Crawling service implementation
-* Shredder service implementation
-* Horn service implementation
-* Decider service implementation
+* ~~Database setup files~~
+* ~~Crawling service implementation~~
+* ~~Shredder service implementation~~
+* ~~Horn service implementation~~
+* ~~Decider service implementation~~
+* Outreach service implementation
+* Seeding data
+* Integration test
 
 The following are *extras* if time permits
 
