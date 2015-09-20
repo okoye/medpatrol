@@ -77,6 +77,7 @@ class Persistence(object):
                 decoded = json.loads(from_base64(message))
             except Exception as ex:
                 logging.error('failed to decode a message, dropping silently')
+                self.socket.send('')
             else:
                 if 'flag' in decoded:
                     self.store(decoded)
