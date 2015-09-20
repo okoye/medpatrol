@@ -16,7 +16,10 @@ def main():
     try:
         from setuptools import setup, find_packages
         SETUPTOOLS_METADATA = dict(
-            install_requires = ['setuptools', 'requests', 'python-twitter'],
+            install_requires = ['setuptools',
+                                'requests',
+                                'python-twitter',
+                                'pyzmq'],
             include_package_data = True,
             package_dir = {'':'lib'},
             packages = find_packages(where='lib'),
