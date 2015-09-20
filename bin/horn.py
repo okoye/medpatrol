@@ -86,3 +86,8 @@ class Searcher(object):
                 #TODO: we should actually return *most likely* result not multiple
                 encoded = to_base64(response)
                 self.socket.send(encoded)
+
+
+if __name__ == '__main__':
+    searcher = Searcher()
+    search.process()

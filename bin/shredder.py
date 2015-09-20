@@ -11,6 +11,7 @@ import couchdbkit
 from couchdbkit.designer import push
 from a.message import Flag
 from datetime import datetime
+from a.coder import to_base64, from_base64
 
 class SpamDetection:pass
 
