@@ -79,6 +79,7 @@ class Persistence(object):
             else:
                 if 'flag' in decoded:
                     self.store(decoded)
+                    self.socket.send('')
                 elif 'check' in decoded:
                     flags = self.retrieve(decoded['business_id'])
                     encoded = to_base64(flags)
