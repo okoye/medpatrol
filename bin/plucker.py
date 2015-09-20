@@ -27,7 +27,7 @@ class Twitter(object):
                                 consumer_secret=csecret,
                                 access_token_key=tkey,
                                 access_token_secret=tsecret)
-        zmq_port = os.environ['ZMQ_REQUEST_PORT']
+        zmq_port = os.environ['FIREHOSE_REQUEST_PORT']
         context = zmq.Context()
         logging.info('Setting up ZeroMQ port at %s' % zmq_port)
         socket = context.socket(zmq.REQ)

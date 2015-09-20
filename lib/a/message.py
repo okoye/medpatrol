@@ -1,5 +1,5 @@
 '''
-Messages stored by our platform
+Messages stored by our platform and transmitted
 '''
 from couchdbkit import *
 

@@ -2,7 +2,7 @@
 A ZeroMQ queue device
 
 Assumptions:
-    ZMQ_REQUEST_PORT and ZMQ_RESPONSE_PORT set in env vars
+    PERSIST_REQUEST_PORT and PERSIST_RESPONSE_PORT set in env vars
 '''
 import os
 import zmq
@@ -10,8 +10,8 @@ import logging
 
 def run_forever():
     try:
-        rep_port = os.environ['ZMQ_RESPONSE_PORT']
-        req_port = os.environ['ZMQ_REQUEST_PORT']
+        rep_port = os.environ['PERSIST_RESPONSE_PORT']
+        req_port = os.environ['PERSIST_REQUEST_PORT']
         logging.info('device listening on %s and %s' % (rep_port, req_port))
         context = zmq.Context(1)
         frontend = context.socket(zmq.XREP)
