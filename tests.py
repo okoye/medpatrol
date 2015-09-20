@@ -1,6 +1,9 @@
 import unittest
 import json
+from uuid import uuid4
+from datetime import datetime
 from lib.a.coder import to_base64, from_base64
+from lib.a.message import Flag
 
 class TestSerialization(unittest.TestCase):
 
@@ -19,3 +22,17 @@ class TestSerialization(unittest.TestCase):
         self.assertTrue('message' in new_doc)
 
         #TODO: some equals assertion?
+
+
+class TestMessage(unittest.TestCase):
+
+    def test_a_flag(self):
+        message = Flag(business_id=str(uuid4()),
+                        drug_name='Chloroquine',
+                        date=datetime.utcnow())
+
+        self.assertTrue(hasattr(message, 'business_id'))
+        self.assertTrue(hasattr(message, 'drug_name'))
+        self.assertTrue(hasattr(message, 'date'))
+
+        #TODO: some equals assertion to ensure no data corruption
