@@ -17,7 +17,9 @@ The following are *extras* if time permits
 ## Mathew
 * ~~Name~~
 * ~~Setup Twitter Account~~
-* Basic Logo (Twitter and Website)
+* ~~Basic Logo (Twitter and Website)~~
 * Website
 * Define Rules for Twitter
-* Testing (replys and questios)
+* Testing (replys and questions)
+* Presentation Outline
+* Presentation Slides
