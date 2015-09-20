@@ -23,8 +23,6 @@ class Persistence(object):
         zmq_port = os.environ['PERSIST_RESPONSE_PORT']
         context = zmq.Context()
         socket = context.socket(zmq.REP)
-        topic = os.environ.get('TWITTER_SHREDDER', 'persist.twitter')
-        socket.setsockopt(zmq.SUBSCRIBE, topic)
         self.socket = socket
 
 
