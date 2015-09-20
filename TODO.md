@@ -1,8 +1,8 @@
 ## Chuka
 * ~~System architecture~~
 * ~~Design review~~
-* Project files structure
-* Project setup files
+* ~~Project files structure~~
+* ~~Project setup files~~
 * Database setup files
 * Crawling service implementation
 * Shredder service implementation

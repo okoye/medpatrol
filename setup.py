@@ -16,7 +16,7 @@ def main():
     try:
         from setuptools import setup, find_packages
         SETUPTOOLS_METADATA = dict(
-            install_requires = ['setuptools', 'requests'],
+            install_requires = ['setuptools', 'requests', 'python-twitter'],
             include_package_data = True,
             package_dir = {'':'lib'},
             packages = find_packages(where='lib'),
