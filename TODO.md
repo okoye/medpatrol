@@ -21,8 +21,8 @@ The following are *extras* if time permits
 * ~~Name~~
 * ~~Setup Twitter Account~~
 * ~~Basic Logo (Twitter and Website)~~
-* Website
+* ~~Website~~
 * Define Rules for Twitter
 * Testing (replys and questions)
-* Presentation Outline
+* ~~Presentation Outline~~
 * ~~Presentation Slides~~
