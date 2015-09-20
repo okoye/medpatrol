@@ -50,7 +50,7 @@ class Twitter(object):
             logging.debug('received message from zmq backend')
             reply = from_base64(reply)
             if reply == 'sweet':
-                pass # TODO: favorite tweet
+                self.api.CreateFavorite(status)
             elif reply == 'sour':
                 logging.warn('cannot understand message [%s]' % status.text)
             else:
