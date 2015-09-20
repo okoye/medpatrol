@@ -12,12 +12,14 @@ def run_forever():
     try:
         rep_port = os.environ['ZMQ_RESPONSE_PORT']
         req_port = os.environ['ZMQ_REQUEST_PORT']
+        logging.info('device listening on %s and %s' % (rep_port, req_port))
         context = zmq.Context(1)
         frontend = context.socket(zmq.XREP)
         frontend.bind('tcp://*:%s'%rep_port)
         backend = context.socket(zmq.XREQ)
         backend.bind('tcp://*:%s'%req_port)
 
+        logging.info('starting device')
         zmq.device(zmq.QUEUE, frontend, backend)
     except Exception as ex:
         logging.error(ex)
@@ -29,4 +31,5 @@ def run_forever():
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
     run_forever()
