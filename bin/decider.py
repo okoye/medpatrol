@@ -6,26 +6,16 @@ Decider, a core application is responsible for the following:
 '''
 
 import os
-import zmq
+import json
+import zerorpc
 import logging
+from twitter import status
 from a.coder import to_base64, from_base64
 from nltk.tag import StanfordNERTagger
 
 class Decider(object):
 
     def __init__(self):
-        firehose_port = os.environ['FIREHOSE_RESPONSE_PORT']
-        searcher_port = os.environ['SEARCHER_REQUEST_PORT']
-        persist_port = os.environ['PERSIST_REQUEST_PORT']
-        outreach_port = os.environ['OUTREACH_REQUEST_PORT']
-
-        # zmq setup
-        context = zmq.Context()
-        firehose_socket = context.socket(zmq.REP)
-        self.firehose_socket = firehose_socket
-
-        # TODO: start enabling services for testing purposes
-
         # Entity recognition
         ner_classifier = os.environ['NER_CLASSIFIER']
         ner_jar = os.environ['NER_JAR']
@@ -34,6 +24,19 @@ class Decider(object):
         logging.info('successfully initialized Stanford NER tagger')
         # TODO: Part of speech tagger (POS)
 
+
+        #zrpc clients
+        shredder_port = os.environ['SHREDDER_PORT']
+        shredder = zerorpc.Client()
+        shredder.connect('tcp://localhost:%s' % shredder_port)
+        self.shredder = shredder
+
+        horn_port = os.environ['HORN_PORT']
+        horn = zerorpc.Client()
+        horn.connect('tcp://localhost:%s' % horn_port)
+        self.horn = horn
+
+        # TODO: outlook
 
     def get_entities(self, text):
         '''
@@ -69,31 +72,37 @@ class Decider(object):
         #TODO increase aggression levels.
         return ([], [])
 
-    def process(self):
+    def process(self, message):
         '''
         Do request-reply dance
         '''
-        while True:
-            logging.info('listening for connections')
-            message = self.firehose_socket.recv()
-            logging.debug('received new message from firehose')
 
-            try:
-                decoded = json.loads(from_base64(message))
-                tweet = status.Status(**decoded)
-            except Exception as ex:
-                logging.error('could not decode message, probably corrupted')
-                self.socket.send('sour')
+        logging.info('received new message from firehose')
+        try:
+            decoded = json.loads(from_base64(message))
+            tweet = status.Status(**decoded)
+        except Exception as ex:
+            logging.error('could not decode message, probably corrupted')
+            return 'sour'
+        else:
+            org, location = self.get_entities(tweet.text)
+            if not len(org) or not len(location):
+                return 'sour'
             else:
-                org, location = self.get_entities(tweet.text)
-                if not len(org) or not len(location):
-                    self.socket.send('sour')
-                else:
-                    logging.info('we have identified potential location and org')
-                    pass # TODO: contact search API.
+                logging.info('we have identified potential location and org')
+        search_request = {
+            'business_name': ' '.join(org),
+            'location' : ' '.join(location)
+        }
+        result = self.horn.process(to_base64(json.dumps(search_request)))
+        logging.debug('search finished')
 
+        #TODO: determine what kind of request this is
+        return 'sweet'
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    decider = Decider()
-    decider.process()
+    s = zerorpc.Server(Decider())
+    port = os.environ['DECIDER_PORT']
+    s.bind('tcp://0.0.0.0:%s'%port)
+    s.run()

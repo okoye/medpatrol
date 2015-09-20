@@ -3,7 +3,8 @@ Responsible for conducting searches on ES to find certain entities
 '''
 
 import os
-import zmq
+import json
+import zerorpc
 import logging
 import elasticsearch
 from a.coder import to_base64, from_base64
@@ -11,10 +12,6 @@ from a.coder import to_base64, from_base64
 class Searcher(object):
 
     def __init__(self):
-        zmq_port = os.environ['SEARCHER_RESPONSE_PORT']
-        context = zmq.Context()
-        socket = context.socket(zmq.REP)
-        self.socket = socket
         self._business_name_fields = ['business_name', 'other_names']
 
         # setup elasticsearch
@@ -40,7 +37,7 @@ class Searcher(object):
         return {
             "geo_distance": {
                 "distance": "%smi" % miles,
-                "pin.location", location
+                "pin.location": location
             }
         }
 
@@ -61,7 +58,7 @@ class Searcher(object):
             return ''
         logging.info('querying for %s' % (message['business_name']))
         query = self._query(message['location'], message['business_name'])
-        raw_results = self._es(index='pharmacies', body=query)
+        raw_results = self._es.search(index='pharmacies', body=query)
         results = {}
         for i, hit in doc_hits(raw_results):
             results[i] = hit
@@ -69,25 +66,24 @@ class Searcher(object):
         logging.info('search term generated %d hits' % i)
         return results
 
-    def process(self):
+    def process(self, message):
         '''
-        Actual processor that does a request-reply cycle
+        Actual processor that does a request-reply
         '''
-        while True:
-            message = self.socket.recv()
-            logging.debug('received new search request')
-
-            try:
-                decoded = json.loads(from_base64(message))
-            except Exception as ex:
-                logging.error('failed to decode a message, continuing')
-            else:
-                response = self.search(decoded)
-                #TODO: we should actually return *most likely* result not multiple
-                encoded = to_base64(response)
-                self.socket.send(encoded)
-
+        logging.debug('received a new search request')
+        try:
+            decoded = json.loads(from_base64(message))
+        except Exception as ex:
+            logging.error('failed to decode search request')
+            print ex
+            return None
+        else:
+            response = self.search(decoded)
+            return to_base64(response)
 
 if __name__ == '__main__':
-    searcher = Searcher()
-    search.process()
+    logging.basicConfig(level=logging.DEBUG)
+    s = zerorpc.Server(Searcher())
+    port = os.environ['HORN_PORT']
+    s.bind('tcp://0.0.0.0:%s'%port)
+    s.run()
